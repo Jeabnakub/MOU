@@ -1,11 +1,740 @@
-<!DOCTYPE html>
+<!doctype html>
+<html lang="th" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ระบบทะเบียนคุมการบันทึกข้อมูลแจ้งการจ้าง (ตท.13)</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&amp;family=Noto+Sans+Thai:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+  <script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        slate: { 50:'#f8fafc',100:'#f1f5f9',200:'#e2e8f0',300:'#cbd5e1',400:'#94a3b8',500:'#64748b',600:'#475569',700:'#334155',800:'#1e293b',900:'#0f172a' },
+        teal: { 50:'#f0fdfa',100:'#ccfbf1',200:'#99f6e4',300:'#5eead4',400:'#2dd4bf',500:'#14b8a6',600:'#0d9488',700:'#0f766e',800:'#115e59',900:'#134e4a' },
+        slate2: { 500:'#64748b',600:'#475569',700:'#334155' }
+      }
+    }
+  }
+}
+</script>
+  <style>
+* { font-family: 'Sarabun', 'Noto Sans Thai', sans-serif; }
+html, body { height: 100%; margin: 0; }
+#app { flex-wrap: wrap; }
+#sidebar { transition: transform 0.3s ease; }
+#sidebar.mobile-closed { transform: translateX(-100%); position: absolute; z-index: 40; }
+.sidebar-link { transition: all 0.3s; border-left: 3px solid transparent; position: relative; }
+.sidebar-link:hover { background: rgba(255,255,255,0.15); border-left-color: #2dd4bf; transform: translateX(4px); }
+.sidebar-link.active { background: rgba(45,212,191,0.2); border-left-color: #2dd4bf; }
+.form-input { transition: all 0.3s; border: 1.5px solid #e5e7eb; border-radius: 8px; }
+.form-input:focus { border-color: #0d9488; box-shadow: 0 0 0 4px rgba(13,148,136,0.1); outline: none; }
+select.form-input { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 0.75rem center; padding-right: 2rem; }
+.card { background: white; border-radius: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.06), 0 8px 20px rgba(0,0,0,0.04); border: 1px solid rgba(15,23,42,0.05); }
+.stat-card { border-radius: 16px; padding: 1.5rem; background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%); border: 1.5px solid #e2e8f0; transition: all 0.3s cubic-bezier(0.4,0,0.2,1); }
+.stat-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.08); border-color: #cbd5e1; }
+.badge { display: inline-flex; align-items: center; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.3px; }
+.table-row:hover { background: #f0fdfa; }
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+.fade-in { animation: fadeIn 0.4s cubic-bezier(0.4,0,0.2,1); }
+@keyframes fadeIn { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+@keyframes slideInLeft { from { opacity:0; transform:translateX(-20px); } to { opacity:1; transform:translateX(0); } }
+.autocomplete-list { position: absolute; z-index: 50; background: white; border: 1px solid #e2e8f0; border-radius: 12px; max-height: 200px; overflow-y: auto; box-shadow: 0 12px 32px rgba(0,0,0,0.12); }
+.autocomplete-list div { padding: 10px 12px; cursor: pointer; font-size: 0.875rem; transition: all 0.2s; border-bottom: 1px solid #f1f5f9; }
+.autocomplete-list div:last-child { border-bottom: none; }
+.autocomplete-list div:hover { background: #f0fdfa; color: #0d9488; font-weight: 500; }
+.menu-toggle { display: none; }
+@media (max-width: 768px) {
+  #sidebar { width: 100% !important; min-height: auto; position: fixed; left: 0; top: 0; height: 100%; transform: translateX(-100%); }
+  #sidebar.mobile-open { transform: translateX(0); }
+  main { width: 100% !important; }
+  .menu-toggle { display: block; }
+  .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 39; }
+  .sidebar-overlay.active { display: block; }
+  .card { margin: 0 -1.5rem; border-radius: 12px; }
+  table { font-size: 0.7rem; }
+}
+@media (max-width: 640px) {
+  main { padding: 1rem; }
+  .card { padding: 1rem !important; }
+  [class*="grid-cols"] { grid-template-columns: 1fr !important; }
+}
+</style>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full bg-white">
+  <div id="app" class="flex h-full w-full">
+   <div id="sidebarOverlay" class="sidebar-overlay" onclick="toggleMobileMenu()"></div><!-- Sidebar -->
+   <aside id="sidebar" class="w-64 bg-gradient-to-b from-slate-500 to-slate-600 text-white flex flex-col flex-shrink-0" style="min-height:100%">
+    <div class="p-5 border-b border-white/10">
+     <div class="flex items-center gap-3 mb-2 justify-between">
+      <div class="flex items-center gap-3">
+       <div class="w-10 h-10 rounded-lg bg-white flex items-center justify-center">
+        <i data-lucide="file-text" class="w-5 h-5 text-gray-600"></i>
+       </div>
+       <div>
+        <h1 class="text-sm font-bold leading-tight">ระบบทะเบียนคุม</h1>
+        <p class="text-[10px] text-white/60">ตท.13 สบต.</p>
+       </div>
+      </div><button onclick="toggleMobileMenu()" class="menu-toggle text-white hover:bg-white/10 p-2 rounded md:hidden"> <i data-lucide="x" class="w-5 h-5"></i> </button>
+     </div>
+    </div>
+    <nav class="flex-1 py-4 space-y-1 px-2">
+     <a href="#" onclick="showPage('form')" id="nav-form" class="sidebar-link active flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium"> <i data-lucide="edit-3" class="w-4 h-4"></i> บันทึกข้อมูล </a> <a href="#" onclick="showPage('search')" id="nav-search" class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium"> <i data-lucide="search" class="w-4 h-4"></i> เรียกดูข้อมูล </a>
+     <div class="pt-3 pb-1 px-4">
+      <p class="text-[10px] uppercase tracking-wider text-white/40 font-semibold">รายงาน</p>
+     </div><a href="#" onclick="showPage('report-all')" id="nav-report-all" class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium"> <i data-lucide="bar-chart-3" class="w-4 h-4"></i> ข้อมูลทั้งหมด </a> <a href="#" onclick="showPage('report-staff')" id="nav-report-staff" class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium"> <i data-lucide="users" class="w-4 h-4"></i> ตามเจ้าหน้าที่ </a> <a href="#" onclick="showPage('report-status')" id="nav-report-status" class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium"> <i data-lucide="activity" class="w-4 h-4"></i> ตามสถานะ </a> <a href="#" onclick="showPage('report-office')" id="nav-report-office" class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium"> <i data-lucide="building" class="w-4 h-4"></i> ตามสำนักงาน </a>
+    </nav>
+    <div class="p-4 border-t border-white/10">
+     <p class="text-[10px] text-white/40 text-center">สำนักบริหารแรงงานต่างด้าว<br>
+       กรมการจัดหางาน</p>
+    </div>
+   </aside><!-- Main Content -->
+   <main class="flex-1 overflow-auto p-6">
+    <!-- Mobile Menu Button -->
+    <div class="md:hidden mb-4 flex items-center justify-between">
+     <button onclick="toggleMobileMenu()" class="menu-toggle bg-slate-600 text-white hover:bg-slate-700 px-4 py-2 rounded-lg text-sm transition flex items-center gap-2"> <i data-lucide="menu" class="w-4 h-4"></i> เมนู </button>
+    </div><!-- Page: Form -->
+    <div id="page-form" class="fade-in max-w-5xl mx-auto">
+     <div class="flex items-center gap-3 mb-6">
+      <div class="w-12 h-12 rounded-xl bg-teal-500 flex items-center justify-center">
+       <i data-lucide="file-plus" class="w-6 h-6 text-white"></i>
+      </div>
+      <div>
+       <h2 id="main-title" class="text-xl font-bold text-teal-600">ระบบทะเบียนคุมการบันทึกข้อมูลแจ้งการจ้าง (ตท.13)</h2>
+       <p class="text-sm text-gray-500">สำนักบริหารแรงงานต่างด้าว กรมการจัดหางาน</p>
+      </div>
+     </div>
+     <form id="dataForm" class="card p-6 space-y-5" onsubmit="return false;">
+      <!-- Row 1 -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+       <div>
+        <label class="block text-sm font-semibold text-gray-700 mb-1">ลำดับที่</label> <input type="text" id="f_seq" class="form-input w-full border border-gray-300 rounded-lg px-3 py-2 text-sm bg-gray-100 cursor-not-allowed" readonly placeholder="ระบบจะกำหนดให้อัตโนมัติ">
+        <p class="text-[11px] text-amber-600 mt-1"><i data-lucide="info" class="w-3 h-3 inline"></i> ไม่ต้องกรอก ระบบจะบันทึกลำดับให้อัตโนมัติ</p>
+       </div>
+       <div>
+        <label class="block text-sm font-semibold text-gray-700 mb-1">เลขรับ (สบต.) <span class="text-red-500">*</span></label> <input type="text" id="f_recvNo" class="form-input w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" placeholder="เลขรับ" required>
+       </div>
+       <div>
+        <label class="block text-sm font-semibold text-gray-700 mb-1">วันที่รับหนังสือ (สบต.) <span class="text-red-500">*</span></label> <input type="date" id="f_recvDate" class="form-input w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" required onchange="document.getElementById('f_recvDateThai').textContent = convertDateToThai(this.value)">
+        <p class="text-[11px] text-gray-500 mt-1" id="f_recvDateThai">-</p>
+       </div>
+      </div><!-- Row 2 -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+       <div>
+        <label class="block text-sm font-semibold text-gray-700 mb-1">ชื่อแรงงานต่างด้าว <span class="text-red-500">*</span></label> <input type="text" id="f_workerName" class="form-input w-full border border-gray-300 rounded-lg px-3 py-2 text-sm uppercase" placeholder="ENGLISH ONLY" required oninput="this.value=this.value.replace(/[^a-zA-Z\s.\-]/g,'').toUpperCase()">
+        <p class="text-[11px] text-blue-600 mt-1"><i data-lucide="info" class="w-3 h-3 inline"></i> กรอกภาษาอังกฤษเท่านั้น (ปรับเป็นพิมพ์ใหญ่อัตโนมัติ)</p>
+       </div>
+       <div>
+        <label class="block text-sm font-semibold text-gray-700 mb-1">เลขใบอนุญาตทำงาน <span class="text-red-500">*</span></label> <input type="text" id="f_wpNo" class="form-input w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" placeholder="13 หลัก" required maxlength="13" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+        <p class="text-[11px] text-gray-500 mt-1" id="wpCount">0/13 หลัก</p>
+       </div>
+       <div>
+        <label class="block text-sm font-semibold text-gray-700 mb-1">หมายเลขหนังสือเดินทาง <span class="text-red-500">*</span></label> <input type="text" id="f_passport" class="form-input w-full border border-gray-300 rounded-lg px-3 py-2 text-sm uppercase" placeholder="ตัวอักษรอังกฤษและตัวเลข" required oninput="this.value=this.value.replace(/[^a-zA-Z0-9]/g,'').toUpperCase()">
+        <p class="text-[11px] text-blue-600 mt-1"><i data-lucide="info" class="w-3 h-3 inline"></i> ภาษาอังกฤษและตัวเลขเท่านั้น</p>
+       </div>
+      </div><!-- Row 3 -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+       <div>
+        <label class="block text-sm font-semibold text-gray-700 mb-1">สัญชาติ <span class="text-red-500">*</span></label> <select id="f_nationality" class="form-input w-full border border-gray-300 rounded-lg px-3 py-2 text-sm appearance-none" required> <option value="">-- เลือกสัญชาติ --</option> <option>เมียนมา</option><option>ลาว</option><option>กัมพูชา</option><option>เวียดนาม</option><option>อื่น ๆ</option> </select>
+       </div>
+       <div>
+        <label class="block text-sm font-semibold text-gray-700 mb-1">เลขประจำตัวนายจ้าง <span class="text-red-500">*</span></label> <input type="text" id="f_empId" class="form-input w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" placeholder="13 หลัก" required maxlength="13" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+        <p class="text-[11px] text-gray-500 mt-1" id="empIdCount">0/13 หลัก</p>
+       </div>
+       <div>
+        <label class="block text-sm font-semibold text-gray-700 mb-1">ชื่อนายจ้าง/สถานประกอบการ <span class="text-red-500">*</span></label> <input type="text" id="f_empName" class="form-input w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" placeholder="ชื่อนายจ้าง" required>
+       </div>
+      </div><!-- Row 4 -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+       <div class="relative">
+        <label class="block text-sm font-semibold text-gray-700 mb-1">ยื่นเอกสารผ่านสำนักงาน <span class="text-red-500">*</span></label> <input type="text" id="f_office" class="form-input w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" placeholder="พิมพ์เพื่อค้นหาสำนักงาน..." required autocomplete="off">
+        <div id="officeDropdown" class="autocomplete-list hidden w-full"></div>
+       </div>
+       <div>
+        <label class="block text-sm font-semibold text-gray-700 mb-1">เจ้าหน้าที่ผู้รับผิดชอบ <span class="text-red-500">*</span></label> <select id="f_staff" class="form-input w-full border border-gray-300 rounded-lg px-3 py-2 text-sm appearance-none" required> <option value="">-- เลือกเจ้าหน้าที่ --</option> <optgroup label="👨 ชาย"> <option>นายณภัทร ทิพยโอสถ</option> <option>นายสุทธาธิโรจน์ ยางงาม</option> <option>นายสุเมธ ยิ้มพงษ์</option> </optgroup> <optgroup label="👩 หญิง"> <option>นางสาวฐิติวรดา อินทร์ประสิทธิ์</option> <option>นางสาวนุศรา กลิ่นจุน</option> <option>นางสาวพรพัสตร์ ช่วยบำรุง</option> <option>นางสาวพัชราภา สุทธิอาจ</option> <option>นางสาวมณฑกานต์ แจ่มใจ</option> <option>นางสาวเมขลา อุดมสิริสถาพร</option> <option>นางสาวศิริปรมินทร์ ขันติคเชนชาติ</option> </optgroup> </select>
+       </div>
+       <div>
+        <label class="block text-sm font-semibold text-gray-700 mb-1">สถานะการดำเนินการ <span class="text-red-500">*</span></label> <select id="f_status" class="form-input w-full border border-gray-300 rounded-lg px-3 py-2 text-sm appearance-none" required> <option value="">-- เลือกสถานะ --</option> <option>ดำเนินการบันทึกข้อมูลเรียบร้อยรอแจ้งหน่วยงาน</option> <option>ดำเนินการเสร็จสิ้น</option> </select>
+       </div>
+      </div><!-- Row 5 -->
+      <div>
+       <label class="block text-sm font-semibold text-gray-700 mb-1">หมายเหตุ</label> <textarea id="f_remark" class="form-input w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" rows="2" placeholder="หมายเหตุ (ถ้ามี)"></textarea>
+      </div>
+      <div class="flex gap-3 pt-2">
+       <button type="button" onclick="submitForm()" class="bg-teal-600 hover:bg-teal-700 text-white font-semibold px-8 py-2.5 rounded-lg text-sm transition flex items-center gap-2"> <i data-lucide="save" class="w-4 h-4"></i> บันทึกข้อมูล </button> <button type="button" onclick="clearAllFormData()" class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold px-6 py-2.5 rounded-lg text-sm transition flex items-center gap-2"> <i data-lucide="rotate-ccw" class="w-4 h-4"></i> ล้างข้อมูล </button>
+      </div>
+     </form>
+    </div><!-- Page: Search -->
+    <div id="page-search" class="fade-in max-w-6xl mx-auto hidden">
+     <div class="p-6 border-b border-white/10">
+      <div class="flex items-center gap-3 mb-2">
+       <div class="w-12 h-12 rounded-xl bg-teal-500 flex items-center justify-center">
+        <i data-lucide="search" class="w-6 h-6 text-white"></i>
+       </div>
+       <div>
+        <h2 class="text-xl font-bold text-teal-600">เรียกดูข้อมูลจากฐานข้อมูล</h2>
+        <p class="text-sm text-gray-500">ค้นหาและแก้ไขสถานะการดำเนินการ</p>
+       </div>
+      </div>
+     </div>
+     <div class="card p-6 mb-4">
+      <div class="flex flex-col md:flex-row gap-3">
+       <div class="relative flex-1">
+        <input type="text" id="searchOffice" class="form-input w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" placeholder="พิมพ์ชื่อสำนักงาน..." autocomplete="off">
+        <div id="searchOfficeDropdown" class="autocomplete-list hidden w-full"></div>
+       </div><button type="button" onclick="fetchData()" class="bg-rose-600 hover:bg-rose-700 text-white font-semibold px-6 py-2.5 rounded-lg text-sm transition flex items-center gap-2"> <i data-lucide="database" class="w-4 h-4"></i> เรียกดูข้อมูล </button><button type="button" onclick="clearAllData()" class="bg-gray-500 hover:bg-gray-600 text-white font-semibold px-6 py-2.5 rounded-lg text-sm transition flex items-center gap-2"> <i data-lucide="trash-2" class="w-4 h-4"></i> ล้างข้อมูล </button>
+      </div>
+     </div>
+     <div id="searchResults" class="card p-6">
+      <p class="text-gray-400 text-center py-8 text-sm">กรุณาค้นหาข้อมูลโดยระบุสำนักงาน</p>
+     </div>
+    </div><!-- Page: Report All -->
+    <div id="page-report-all" class="fade-in max-w-5xl mx-auto hidden">
+     <div class="flex items-center gap-3 mb-6">
+      <div class="w-12 h-12 rounded-xl bg-teal-600 flex items-center justify-center">
+       <i data-lucide="bar-chart-3" class="w-6 h-6 text-white"></i>
+      </div>
+      <h2 class="text-xl font-bold text-teal-600">รายงานข้อมูลทั้งหมด</h2>
+     </div>
+     <div id="reportAllContent" class="card p-6">
+      <button onclick="loadReportAll()" class="bg-teal-600 hover:bg-teal-700 text-white font-semibold px-6 py-2.5 rounded-lg text-sm transition flex items-center gap-2 mx-auto"> <i data-lucide="refresh-cw" class="w-4 h-4"></i> โหลดรายงาน </button>
+     </div>
+    </div><!-- Page: Report Staff -->
+    <div id="page-report-staff" class="fade-in max-w-5xl mx-auto hidden">
+     <div class="flex items-center gap-3 mb-6">
+      <div class="w-12 h-12 rounded-xl bg-fuchsia-600 flex items-center justify-center">
+       <i data-lucide="users" class="w-6 h-6 text-white"></i>
+      </div>
+      <h2 class="text-xl font-bold text-teal-600">รายงานตามเจ้าหน้าที่</h2>
+     </div>
+     <div id="reportStaffContent" class="card p-6">
+      <button onclick="loadReportStaff()" class="bg-fuchsia-600 hover:bg-fuchsia-700 text-white font-semibold px-6 py-2.5 rounded-lg text-sm transition flex items-center gap-2 mx-auto"> <i data-lucide="refresh-cw" class="w-4 h-4"></i> โหลดรายงาน </button>
+     </div>
+    </div><!-- Page: Report Status -->
+    <div id="page-report-status" class="fade-in max-w-5xl mx-auto hidden">
+     <div class="flex items-center gap-3 mb-6">
+      <div class="w-12 h-12 rounded-xl bg-orange-600 flex items-center justify-center">
+       <i data-lucide="activity" class="w-6 h-6 text-white"></i>
+      </div>
+      <h2 class="text-xl font-bold text-teal-600">รายงานตามสถานะ</h2>
+     </div>
+     <div id="reportStatusContent" class="card p-6">
+      <button onclick="loadReportStatus()" class="bg-orange-600 hover:bg-orange-700 text-white font-semibold px-6 py-2.5 rounded-lg text-sm transition flex items-center gap-2 mx-auto"> <i data-lucide="refresh-cw" class="w-4 h-4"></i> โหลดรายงาน </button>
+     </div>
+    </div><!-- Page: Report Office -->
+    <div id="page-report-office" class="fade-in max-w-5xl mx-auto hidden">
+     <div class="flex items-center gap-3 mb-6">
+      <div class="w-12 h-12 rounded-xl bg-red-600 flex items-center justify-center">
+       <i data-lucide="building" class="w-6 h-6 text-white"></i>
+      </div>
+      <h2 class="text-xl font-bold text-teal-600">รายงานตามสำนักงาน</h2>
+     </div>
+     <div id="reportOfficeContent" class="card p-6">
+      <button onclick="loadReportOffice()" class="bg-red-600 hover:bg-red-700 text-white font-semibold px-6 py-2.5 rounded-lg text-sm transition flex items-center gap-2 mx-auto"> <i data-lucide="refresh-cw" class="w-4 h-4"></i> โหลดรายงาน </button>
+     </div>
+    </div>
+   </main>
+  </div>
+  <script>
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby5nnDFMlKzV0pMNV7DjkNmqOSsL6xfIbZCv-8LV0FQ5g7PamYDNvywuZANXle5mFCkMw/exec';
 
-<html>
-   <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-      <base target="_top">
-   </head>
-   <body>
-      <iframe style="position: absolute;top: 0;left: 0;width: 100%;height: 100%;border: 0;" src="https://script.google.com/macros/s/AKfycbzvVtRJ46f9Nr0t8hY0Qx4ng3KZ1pqFOP_c6GTgOeXXUcKnZNSl3ptNtqmYRgZPh9a1bw/exec"></iframe>
-   </body>
+const offices = ["สำนักบริหารแรงงานต่างด้าว","สจก.พื้นที่ 1","สจก.พื้นที่ 2","สจก.พื้นที่ 3","สจก.พื้นที่ 4","สจก.พื้นที่ 5","สจก.พื้นที่ 6","สจก.พื้นที่ 7","สจก.พื้นที่ 8","สจก.พื้นที่ 9","สจก.พื้นที่ 10","สจจ.กระบี่","สจจ.กาญจนบุรี","สจจ.กาฬสินธุ์","สจจ.กำแพงเพชร","สจจ.ขอนแก่น","สจจ.จันทบุรี","สจจ.ฉะเชิงเทรา","สจจ.ชลบุรี","สจจ.ชัยนาท","สจจ.ชัยภูมิ","สจจ.ชุมพร","สจจ.เชียงราย","สจจ.เชียงใหม่","สจจ.ตรัง","สจจ.ตราด","สจจ.ตาก","สจจ.นครนายก","สจจ.นครปฐม","สจจ.นครพนม","สจจ.นครราชสีมา","สจจ.นครศรีธรรมราช","สจจ.นครสวรรค์","สจจ.นนทบุรี","สจจ.นราธิวาส","สจจ.น่าน","สจจ.บึงกาฬ","สจจ.บุรีรัมย์","สจจ.ปทุมธานี","สจจ.ประจวบคีรีขันธ์","สจจ.ปราจีนบุรี","สจจ.ปัตตานี","สจจ.พระนครศรีอยุธยา","สจจ.พะเยา","สจจ.พังงา","สจจ.พัทลุง","สจจ.พิจิตร","สจจ.พิษณุโลก","สจจ.เพชรบุรี","สจจ.เพชรบูรณ์","สจจ.แพร่","สจจ.ภูเก็ต","สจจ.มหาสารคาม","สจจ.มุกดาหาร","สจจ.แม่ฮ่องสอน","สจจ.ยโสธร","สจจ.ยะลา","สจจ.ร้อยเอ็ด","สจจ.ระนอง","สจจ.ระยอง","สจจ.ราชบุรี","สจจ.ลพบุรี","สจจ.ลำปาง","สจจ.ลำพูน","สจจ.เลย","สจจ.ศรีสะเกษ","สจจ.สกลนคร","สจจ.สงขลา","สจจ.สตูล","สจจ.สมุทรปราการ","สจจ.สมุทรสงคราม","สจจ.สมุทรสาคร","สจจ.สระแก้ว","สจจ.สระบุรี","สจจ.สิงห์บุรี","สจจ.สุโขทัย","สจจ.สุพรรณบุรี","สจจ.สุราษฎร์ธานี","สจจ.สุรินทร์","สจจ.หนองคาย","สจจ.หนองบัวลำภู","สจจ.อ่างทอง","สจจ.อุดรธานี","สจจ.อุตรดิตถ์","สจจ.อุทัยธานี","สจจ.อุบลราชธานี","สจจ.อำนาจเจริญ"];
+
+// Autocomplete for office fields
+function setupAutocomplete(inputId, dropdownId) {
+  const input = document.getElementById(inputId);
+  const dropdown = document.getElementById(dropdownId);
+  input.addEventListener('input', function() {
+    const val = this.value.trim().toLowerCase();
+    if (!val) { dropdown.classList.add('hidden'); return; }
+    const filtered = offices.filter(o => o.toLowerCase().includes(val));
+    if (filtered.length === 0) { dropdown.classList.add('hidden'); return; }
+    dropdown.innerHTML = filtered.map(o => `<div onclick="document.getElementById('${inputId}').value='${o}';document.getElementById('${dropdownId}').classList.add('hidden')">${o}</div>`).join('');
+    dropdown.classList.remove('hidden');
+  });
+  input.addEventListener('blur', () => setTimeout(() => dropdown.classList.add('hidden'), 200));
+  input.addEventListener('focus', function() { if(this.value.trim()) this.dispatchEvent(new Event('input')); });
+}
+
+// Digit counters
+document.getElementById('f_wpNo').addEventListener('input', function() {
+  document.getElementById('wpCount').textContent = this.value.length + '/13 หลัก';
+  document.getElementById('wpCount').className = 'text-[11px] mt-1 ' + (this.value.length === 13 ? 'text-green-600 font-semibold' : 'text-gray-500');
+});
+document.getElementById('f_empId').addEventListener('input', function() {
+  document.getElementById('empIdCount').textContent = this.value.length + '/13 หลัก';
+  document.getElementById('empIdCount').className = 'text-[11px] mt-1 ' + (this.value.length === 13 ? 'text-green-600 font-semibold' : 'text-gray-500');
+});
+
+// Page navigation
+function showPage(page) {
+  document.querySelectorAll('[id^="page-"]').forEach(p => p.classList.add('hidden'));
+  document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+  const pageEl = document.getElementById('page-' + page);
+  if (pageEl) { pageEl.classList.remove('hidden'); pageEl.classList.add('fade-in'); }
+  const navEl = document.getElementById('nav-' + page);
+  if (navEl) navEl.classList.add('active');
+  // ปิด mobile menu เมื่อเลือกหน้า
+  if (window.innerWidth <= 768) {
+    document.getElementById('sidebar').classList.remove('mobile-open');
+    document.getElementById('sidebarOverlay').classList.remove('active');
+  }
+}
+
+function toggleMobileMenu() {
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('sidebarOverlay');
+  sidebar.classList.toggle('mobile-open');
+  overlay.classList.toggle('active');
+}
+
+function resetForm() {
+  document.getElementById('dataForm').reset();
+  document.getElementById('wpCount').textContent = '0/13 หลัก';
+  document.getElementById('empIdCount').textContent = '0/13 หลัก';
+}
+
+function clearAllFormData() {
+  // ล้างฟอร์มบันทึกข้อมูล
+  resetForm();
+  
+  // ล้างการค้นหา
+  document.getElementById('searchOffice').value = '';
+  document.getElementById('searchResults').innerHTML = '<p class="text-gray-400 text-center py-8 text-sm">กรุณาค้นหาข้อมูลโดยระบุสำนักงาน</p>';
+  
+  // ล้างแสดงวันที่ไทย
+  document.getElementById('f_recvDateThai').textContent = '-';
+}
+
+function clearAllData() {
+  // ล้างฟอร์มบันทึกข้อมูล
+  resetForm();
+  
+  // ล้างการค้นหา
+  document.getElementById('searchOffice').value = '';
+  document.getElementById('searchResults').innerHTML = '<p class="text-gray-400 text-center py-8 text-sm">กรุณาค้นหาข้อมูลโดยระบุสำนักงาน</p>';
+  
+  // ล้างแสดงวันที่ไทย
+  document.getElementById('f_recvDateThai').textContent = '-';
+}
+
+// Format Thai datetime
+function thaiDateTime(dateStr) {
+  if (!dateStr) return '-';
+  const d = new Date(dateStr);
+  if (isNaN(d)) return dateStr;
+  const thMonths = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+  return `${d.getDate()} ${thMonths[d.getMonth()]} ${d.getFullYear()+543} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')} น.`;
+}
+
+function thaiDate(dateStr) {
+  if (!dateStr) return '-';
+  const parts = dateStr.split('-');
+  if (parts.length !== 3) return dateStr;
+  const thMonths = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+  return `${parseInt(parts[2])} ${thMonths[parseInt(parts[1])-1]} ${parseInt(parts[0])+543}`;
+}
+
+function convertDateToThai(dateStr) {
+  if (!dateStr) return '';
+  const parts = dateStr.split('-');
+  if (parts.length !== 3) return dateStr;
+  const thMonths = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+  return `${parseInt(parts[2])} ${thMonths[parseInt(parts[1])-1]} ${parseInt(parts[0])+543}`;
+}
+
+// JSONP helper
+let jsonpCounter = 0;
+function jsonpRequest(url) {
+  return new Promise((resolve, reject) => {
+    const cbName = '_jsonpCb_' + (++jsonpCounter) + '_' + Date.now();
+    const timeout = setTimeout(() => { cleanup(); reject(new Error('Timeout')); }, 30000);
+    function cleanup() { clearTimeout(timeout); delete window[cbName]; const s = document.getElementById(cbName); if(s) s.remove(); }
+    window[cbName] = function(data) { cleanup(); resolve(data); };
+    const script = document.createElement('script');
+    script.id = cbName;
+    script.src = url + (url.includes('?') ? '&' : '?') + 'callback=' + cbName;
+    script.onerror = function() { cleanup(); reject(new Error('Network error')); };
+    document.body.appendChild(script);
+  });
+}
+
+// Submit form with duplicate prevention
+let isSubmitting = false;
+
+async function submitForm() {
+  if (isSubmitting) return; // ป้องกันการส่งซ้ำ
+  
+  const fields = ['f_recvNo','f_recvDate','f_workerName','f_wpNo','f_passport','f_nationality','f_empId','f_empName','f_office','f_staff','f_status'];
+  for (const fid of fields) {
+    const el = document.getElementById(fid);
+    if (!el.value.trim()) {
+      el.focus();
+      Swal.fire({ icon:'warning', title:'กรุณากรอกข้อมูล', text:'กรุณากรอกข้อมูลให้ครบถ้วน', confirmButtonColor:'#f43f5e' });
+      return;
+    }
+  }
+  if (document.getElementById('f_wpNo').value.length !== 13) {
+    Swal.fire({ icon:'warning', title:'ข้อมูลไม่ถูกต้อง', text:'เลขใบอนุญาตทำงานต้องมี 13 หลัก', confirmButtonColor:'#f43f5e' });
+    return;
+  }
+  if (document.getElementById('f_empId').value.length !== 13) {
+    Swal.fire({ icon:'warning', title:'ข้อมูลไม่ถูกต้อง', text:'เลขประจำตัวนายจ้างต้องมี 13 หลัก', confirmButtonColor:'#f43f5e' });
+    return;
+  }
+
+  isSubmitting = true; // ตั้งค่าสถานะเป็นกำลังส่ง
+
+  const now = new Date();
+  const thaiNow = thaiDateTime(now.toISOString());
+
+  const data = {
+    action: 'create',
+    recvNo: document.getElementById('f_recvNo').value.trim(),
+    recvDate: document.getElementById('f_recvDate').value,
+    workerName: document.getElementById('f_workerName').value.trim(),
+    wpNo: document.getElementById('f_wpNo').value.trim(),
+    passport: document.getElementById('f_passport').value.trim(),
+    nationality: document.getElementById('f_nationality').value,
+    empId: document.getElementById('f_empId').value.trim(),
+    empName: document.getElementById('f_empName').value.trim(),
+    office: document.getElementById('f_office').value.trim(),
+    staff: document.getElementById('f_staff').value,
+    status: document.getElementById('f_status').value,
+    remark: document.getElementById('f_remark').value.trim(),
+    lastUpdate: thaiNow
+  };
+
+  Swal.fire({ title:'กำลังบันทึกข้อมูล...', html:'<p class="text-sm text-gray-500">กรุณารอสักครู่</p>', allowOutsideClick:false, didOpen:()=>Swal.showLoading() });
+
+  try {
+    const params = Object.entries(data).map(([k,v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`).join('&');
+    const result = await jsonpRequest(SCRIPT_URL + '?' + params);
+    if (result && result.status === 'success') {
+      Swal.fire({ icon:'success', title:'บันทึกสำเร็จ!', html:`<p class="text-sm">ลำดับที่: <strong>${result.seq || '-'}</strong></p>`, confirmButtonColor:'#6366f1' });
+      resetForm();
+    } else {
+      Swal.fire({ icon:'error', title:'เกิดข้อผิดพลาด', text: result?.message || 'ไม่สามารถบันทึกข้อมูลได้', confirmButtonColor:'#6366f1' });
+    }
+  } catch(e) {
+    Swal.fire({ icon:'error', title:'เกิดข้อผิดพลาด', text:'ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ได้ กรุณาลองใหม่', confirmButtonColor:'#6366f1' });
+  } finally {
+    isSubmitting = false; // รีเซ็ตสถานะหลังจากส่งเสร็จ
+  }
+}
+
+// Fetch data
+async function fetchData() {
+  const office = document.getElementById('searchOffice').value.trim();
+  if (!office) {
+    Swal.fire({ icon:'warning', title:'กรุณาระบุสำนักงาน', confirmButtonColor:'#6366f1' });
+    return;
+  }
+  Swal.fire({ title:'กำลังโหลดข้อมูล...', allowOutsideClick:false, didOpen:()=>Swal.showLoading() });
+  try {
+    const result = await jsonpRequest(SCRIPT_URL + '?action=read&office=' + encodeURIComponent(office));
+    Swal.close();
+    if (result && result.status === 'success') {
+      renderSearchResults(result.data || []);
+    } else {
+      document.getElementById('searchResults').innerHTML = '<p class="text-red-500 text-center py-8 text-sm">ไม่สามารถโหลดข้อมูลได้</p>';
+    }
+  } catch(e) {
+    Swal.close();
+    document.getElementById('searchResults').innerHTML = '<p class="text-red-500 text-center py-8 text-sm">ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ได้</p>';
+  }
+}
+
+function renderSearchResults(data) {
+  const container = document.getElementById('searchResults');
+  if (!data.length) {
+    container.innerHTML = '<p class="text-gray-400 text-center py-8 text-sm">ไม่พบข้อมูล</p>';
+    return;
+  }
+  let html = `<div class="mb-4">
+    <div class="flex items-center justify-between">
+      <p class="text-sm font-semibold text-gray-700">พบข้อมูลทั้งหมด <span class="text-teal-600 text-lg">${data.length}</span> รายการ</p>
+    </div>
+  </div>
+  <div class="overflow-x-auto"><table class="w-full text-xs">
+  <thead><tr class="bg-gradient-to-r from-teal-50 to-teal-100 border-b-2 border-teal-300">
+    <th class="p-3 text-center font-bold text-teal-900">ลำดับ</th>
+    <th class="p-3 text-left font-bold text-teal-900">เลขรับ</th>
+    <th class="p-3 text-center font-bold text-teal-900">วันที่รับ</th>
+    <th class="p-3 text-left font-bold text-teal-900">ชื่อแรงงาน</th>
+    <th class="p-3 text-center font-bold text-teal-900">เลข WP</th>
+    <th class="p-3 text-center font-bold text-teal-900">Passport</th>
+    <th class="p-3 text-left font-bold text-teal-900">สัญชาติ</th>
+    <th class="p-3 text-center font-bold text-teal-900">เลขนายจ้าง</th>
+    <th class="p-3 text-left font-bold text-teal-900">นายจ้าง</th>
+    <th class="p-3 text-left font-bold text-teal-900">สำนักงาน</th>
+    <th class="p-3 text-left font-bold text-teal-900">เจ้าหน้าที่</th>
+    <th class="p-3 text-center font-bold text-teal-900">สถานะ</th>
+    <th class="p-3 text-center font-bold text-teal-900">วันเวลาแจ้ง</th>
+    <th class="p-3 text-left font-bold text-teal-900">หมายเหตุ</th>
+  </tr></thead><tbody>`;
+  data.forEach((r, i) => {
+    const statusBadge = r.status === 'ดำเนินการเสร็จสิ้น'
+      ? '<span class="inline-block badge bg-green-100 text-green-700 px-2 py-1 rounded-md font-medium">✓ เสร็จสิ้น</span>'
+      : '<span class="inline-block badge bg-amber-100 text-amber-700 px-2 py-1 rounded-md font-medium">⋯ รอแจ้ง</span>';
+    const bgClass = i % 2 === 0 ? 'bg-white' : 'bg-gray-50';
+    html += `<tr class="table-row border-b border-gray-200 hover:bg-teal-50 transition ${bgClass}">
+      <td class="p-3 text-center font-semibold text-gray-700">${r.seq||'-'}</td>
+      <td class="p-3 text-left font-medium text-gray-900">${r.recvNo||'-'}</td>
+      <td class="p-3 text-center text-gray-600">${thaiDate(r.recvDate)||'-'}</td>
+      <td class="p-3 text-left font-medium text-gray-900">${r.workerName||'-'}</td>
+      <td class="p-3 text-center text-gray-700 font-mono">${r.wpNo||'-'}</td>
+      <td class="p-3 text-center text-gray-700 font-mono">${r.passport||'-'}</td>
+      <td class="p-3 text-left text-gray-600">${r.nationality||'-'}</td>
+      <td class="p-3 text-center text-gray-700 font-mono">${r.empId||'-'}</td>
+      <td class="p-3 text-left text-gray-700">${r.empName||'-'}</td>
+      <td class="p-3 text-left text-gray-600">${r.office||'-'}</td>
+      <td class="p-3 text-left text-gray-600">${r.staff||'-'}</td>
+      <td class="p-3 text-center">${statusBadge}</td>
+      <td class="p-3 text-center text-gray-500 text-[10px]">${r.lastUpdate||'-'}</td>
+      <td class="p-3 text-left text-gray-600">${r.remark||'-'}</td>
+    </tr>`;
+  });
+  html += '</tbody></table></div>';
+  container.innerHTML = html;
+}
+
+async function updateStatus(row, btn) {
+  const tr = btn.closest('tr');
+  const select = tr.querySelector('.status-select');
+  const newStatus = select.value;
+  const now = new Date();
+  const thaiNow = thaiDateTime(now.toISOString());
+
+  Swal.fire({ title:'กำลังบันทึก...', allowOutsideClick:false, didOpen:()=>Swal.showLoading() });
+  try {
+    const params = `action=updateStatus&row=${row}&status=${encodeURIComponent(newStatus)}&lastUpdate=${encodeURIComponent(thaiNow)}`;
+    const result = await jsonpRequest(SCRIPT_URL + '?' + params);
+    if (result && result.status === 'success') {
+      Swal.fire({ icon:'success', title:'อัปเดตสำเร็จ!', timer:1500, showConfirmButton:false });
+      fetchData();
+    } else {
+      Swal.fire({ icon:'error', title:'เกิดข้อผิดพลาด', confirmButtonColor:'#6366f1' });
+    }
+  } catch(e) {
+    Swal.fire({ icon:'error', title:'เชื่อมต่อไม่ได้', confirmButtonColor:'#6366f1' });
+  }
+}
+
+// Reports
+async function loadReport(action, containerId) {
+  const container = document.getElementById(containerId);
+  container.innerHTML = '<p class="text-center py-4 text-gray-400 text-sm">กำลังโหลด...</p>';
+  try {
+    const result = await jsonpRequest(SCRIPT_URL + '?action=' + action);
+    return result;
+  } catch(e) {
+    container.innerHTML = '<p class="text-center py-4 text-red-500 text-sm">ไม่สามารถโหลดข้อมูลได้</p>';
+    return null;
+  }
+}
+
+async function loadReportAll() {
+  const result = await loadReport('reportAll', 'reportAllContent');
+  if (!result || result.status !== 'success') return;
+  const d = result.data;
+  document.getElementById('reportAllContent').innerHTML = `
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div class="stat-card border-l-4 border-l-violet-500">
+        <p class="text-sm text-gray-500">จำนวนรายการทั้งหมด</p>
+        <p class="text-3xl font-bold text-violet-700 mt-1">${d.total || 0}</p>
+      </div>
+      <div class="stat-card border-l-4 border-l-amber-500">
+        <p class="text-sm text-gray-500">รอแจ้งหน่วยงาน</p>
+        <p class="text-3xl font-bold text-amber-700 mt-1">${d.pending || 0}</p>
+      </div>
+      <div class="stat-card border-l-4 border-l-green-500">
+        <p class="text-sm text-gray-500">ดำเนินการเสร็จสิ้น</p>
+        <p class="text-3xl font-bold text-green-700 mt-1">${d.completed || 0}</p>
+      </div>
+    </div>
+    <button onclick="loadReportAll()" class="mt-4 text-sm text-violet-600 hover:underline flex items-center gap-1"><i data-lucide="refresh-cw" class="w-3 h-3"></i> รีเฟรช</button>`;
+  lucide.createIcons();
+}
+
+async function loadReportStaff() {
+  const result = await loadReport('reportStaff', 'reportStaffContent');
+  if (!result || result.status !== 'success') return;
+  
+  const staffList = result.data || [];
+  if (staffList.length === 0) {
+    document.getElementById('reportStaffContent').innerHTML = '<p class="text-gray-400 text-center py-8">ไม่พบข้อมูล</p>';
+    return;
+  }
+
+  const totalItems = result.total || 0;
+  const sortedStaff = staffList.sort((a, b) => b.count - a.count);
+  const maxCount = Math.max(...sortedStaff.map(s => s.count));
+  
+  let html = `<div class="mb-6 p-4 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg border border-blue-200">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div>
+        <p class="text-xs text-blue-600 font-semibold uppercase">เจ้าหน้าที่ทั้งหมด</p>
+        <p class="text-2xl font-bold text-blue-800">${staffList.length}</p>
+      </div>
+      <div>
+        <p class="text-xs text-indigo-600 font-semibold uppercase">รายการทั้งหมด</p>
+        <p class="text-2xl font-bold text-indigo-800">${totalItems}</p>
+      </div>
+      <div>
+        <p class="text-xs text-fuchsia-600 font-semibold uppercase">สูงสุด</p>
+        <p class="text-2xl font-bold text-fuchsia-800">${maxCount}</p>
+      </div>
+      <div>
+        <p class="text-xs text-cyan-600 font-semibold uppercase">เฉลี่ย</p>
+        <p class="text-2xl font-bold text-cyan-800">${staffList.length > 0 ? Math.round(totalItems / staffList.length) : 0}</p>
+      </div>
+    </div>
+  </div>`;
+  
+  html += '<div class="space-y-3">';
+  
+  sortedStaff.forEach((s, idx) => {
+    const pct = totalItems ? Math.round((s.count / totalItems) * 100) : 0;
+    const rank = idx + 1;
+    const medals = ['🥇', '🥈', '🥉'];
+    const medal = rank <= 3 ? medals[rank - 1] : '•';
+    
+    const colors = [
+      'from-yellow-400 to-amber-500',
+      'from-gray-300 to-slate-400',
+      'from-orange-400 to-red-500',
+      'from-blue-400 to-indigo-500',
+      'from-purple-400 to-pink-500'
+    ];
+    const bgGradient = colors[idx % colors.length];
+    
+    // Extract recent entries for this staff
+    const recentItems = (s.items || []).slice(0, 3);
+    const hasItems = recentItems.length > 0;
+    
+    html += `<div class="group cursor-pointer transition-all duration-300 hover:shadow-lg">
+      <div class="flex items-center gap-4 p-4 bg-white rounded-xl border-2 border-gray-100 hover:border-fuchsia-300 transition-all">
+        <div class="flex-shrink-0 w-12 h-12 flex items-center justify-center bg-gradient-to-br ${bgGradient} rounded-full text-white font-bold text-lg shadow-md">
+          ${medal}
+        </div>
+        <div class="flex-1 min-w-0">
+          <div class="flex items-center gap-2 mb-1">
+            <p class="text-sm font-bold text-gray-900 truncate">${s.name}</p>
+            <span class="inline-block px-2 py-1 text-xs font-semibold bg-fuchsia-100 text-fuchsia-700 rounded-full">${s.count} รายการ</span>
+          </div>
+          <div class="w-full bg-gray-200 rounded-full h-2 overflow-hidden mb-2">
+            <div class="bg-gradient-to-r ${bgGradient} h-full rounded-full transition-all duration-500" style="width:${pct}%"></div>
+          </div>
+          ${hasItems ? `<div class="text-xs text-gray-600 space-y-1 mb-2 pl-2 border-l-2 border-gray-300">
+            ${recentItems.map(item => `<div class="flex items-center gap-2"><span class="text-gray-400">•</span><span><strong>${item.recvNo || '-'}</strong> (${thaiDate(item.recvDate) || '-'})</span></div>`).join('')}
+            ${s.count > 3 ? `<div class="text-gray-500 italic">... และอีก ${s.count - 3} รายการ</div>` : ''}
+          </div>` : ''}
+          <div class="flex justify-between">
+            <span class="text-xs text-gray-500">${pct}%</span>
+            <span class="text-xs text-gray-500 font-semibold">อันดับ ${rank}</span>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  });
+  
+  html += '</div>';
+  html += '<button onclick="loadReportStaff()" class="mt-6 w-full py-2.5 bg-gradient-to-r from-fuchsia-500 to-pink-500 hover:from-fuchsia-600 hover:to-pink-600 text-white font-semibold rounded-lg transition flex items-center justify-center gap-2"><i data-lucide="refresh-cw" class="w-4 h-4"></i> รีเฟรช</button>';
+  
+  document.getElementById('reportStaffContent').innerHTML = html;
+  lucide.createIcons();
+}
+
+async function loadReportStatus() {
+  const result = await loadReport('reportStatus', 'reportStatusContent');
+  if (!result || result.status !== 'success') return;
+  let html = '<div class="grid grid-cols-1 md:grid-cols-2 gap-4">';
+  (result.data || []).forEach(s => {
+    const isComplete = s.status.includes('เสร็จสิ้น');
+    html += `<div class="stat-card border-l-4 ${isComplete ? 'border-l-green-500' : 'border-l-amber-500'}">
+      <p class="text-sm text-gray-600">${s.status}</p>
+      <p class="text-2xl font-bold ${isComplete ? 'text-green-700' : 'text-amber-700'} mt-1">${s.count} รายการ</p>
+    </div>`;
+  });
+  html += '</div><button onclick="loadReportStatus()" class="mt-4 text-sm text-amber-600 hover:underline flex items-center gap-1"><i data-lucide="refresh-cw" class="w-3 h-3"></i> รีเฟรช</button>';
+  document.getElementById('reportStatusContent').innerHTML = html;
+  lucide.createIcons();
+}
+
+async function loadReportOffice() {
+  const result = await loadReport('reportOffice', 'reportOfficeContent');
+  if (!result || result.status !== 'success') return;
+  let html = '<div class="overflow-x-auto"><table class="w-full text-sm border-collapse"><thead><tr class="bg-gray-100"><th class="p-2 border text-left">สำนักงาน</th><th class="p-2 border text-center w-24">จำนวน</th></tr></thead><tbody>';
+  (result.data || []).forEach(s => {
+    html += `<tr class="table-row border-b"><td class="p-2 border">${s.office}</td><td class="p-2 border text-center font-semibold text-teal-700">${s.count}</td></tr>`;
+  });
+  html += '</tbody></table></div><button onclick="loadReportOffice()" class="mt-4 text-sm text-teal-600 hover:underline flex items-center gap-1"><i data-lucide="refresh-cw" class="w-3 h-3"></i> รีเฟรช</button>';
+  document.getElementById('reportOfficeContent').innerHTML = html;
+  lucide.createIcons();
+}
+
+// Element SDK
+const defaultConfig = {
+  system_title: 'ระบบทะเบียนคุมการบันทึกข้อมูลแจ้งการจ้าง (ตท.13)',
+  background_color: '#ffffff',
+  sidebar_color: '#475569',
+  text_color: '#0d9488',
+  accent_color: '#14b8a6',
+  card_color: '#f8fafc',
+  font_family: 'Sarabun',
+  font_size: 14
+};
+
+if (window.elementSdk) {
+  window.elementSdk.init({
+    defaultConfig,
+    onConfigChange: async (config) => {
+      const title = config.system_title || defaultConfig.system_title;
+      const bg = config.background_color || defaultConfig.background_color;
+      const sidebar = config.sidebar_color || defaultConfig.sidebar_color;
+      const txt = config.text_color || defaultConfig.text_color;
+      const accent = config.accent_color || defaultConfig.accent_color;
+      const font = config.font_family || defaultConfig.font_family;
+      const size = config.font_size || defaultConfig.font_size;
+
+      document.getElementById('main-title').textContent = title;
+      document.querySelector('main').style.background = bg;
+      document.getElementById('sidebar').style.background = `linear-gradient(to bottom, ${sidebar}, ${accent})`;
+      document.querySelectorAll('h2').forEach(h => h.style.color = txt);
+      document.body.style.fontFamily = `${font}, Sarabun, sans-serif`;
+      document.body.style.fontSize = size + 'px';
+    },
+    mapToCapabilities: (config) => ({
+      recolorables: [
+        { get: () => config.background_color || defaultConfig.background_color, set: v => { config.background_color = v; window.elementSdk.setConfig({ background_color: v }); } },
+        { get: () => config.card_color || defaultConfig.card_color, set: v => { config.card_color = v; window.elementSdk.setConfig({ card_color: v }); } },
+        { get: () => config.text_color || defaultConfig.text_color, set: v => { config.text_color = v; window.elementSdk.setConfig({ text_color: v }); } },
+        { get: () => config.sidebar_color || defaultConfig.sidebar_color, set: v => { config.sidebar_color = v; window.elementSdk.setConfig({ sidebar_color: v }); } },
+        { get: () => config.accent_color || defaultConfig.accent_color, set: v => { config.accent_color = v; window.elementSdk.setConfig({ accent_color: v }); } }
+      ],
+      borderables: [],
+      fontEditable: { get: () => config.font_family || defaultConfig.font_family, set: v => { config.font_family = v; window.elementSdk.setConfig({ font_family: v }); } },
+      fontSizeable: { get: () => config.font_size || defaultConfig.font_size, set: v => { config.font_size = v; window.elementSdk.setConfig({ font_size: v }); } }
+    }),
+    mapToEditPanelValues: (config) => new Map([
+      ['system_title', config.system_title || defaultConfig.system_title]
+    ])
+  });
+}
+
+// Init
+setupAutocomplete('f_office', 'officeDropdown');
+setupAutocomplete('searchOffice', 'searchOfficeDropdown');
+lucide.createIcons();
+</script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9e981f8be3b08954',t:'MTc3NTcyMzE0OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
