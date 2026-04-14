@@ -133,6 +133,10 @@ select.form-input { background-image: url("data:image/svg+xml,%3Csvg xmlns='http
         <p class="text-[11px] text-blue-600 mt-1"><i data-lucide="info" class="w-3 h-3 inline"></i> กรอกภาษาอังกฤษเท่านั้น (ปรับเป็นพิมพ์ใหญ่อัตโนมัติ)</p>
        </div>
        <div>
+        <label class="block text-sm font-semibold text-gray-700 mb-1">เลขประจำตัวแรงงานต่างด้าว <span class="text-red-500">*</span></label> <input type="text" id="f_alienId" class="form-input w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" placeholder="เลขประจำตัว" required maxlength="13" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+        <p class="text-[11px] text-gray-500 mt-1" id="alienIdCount">0/13 หลัก</p>
+       </div>
+       <div>
         <label class="block text-sm font-semibold text-gray-700 mb-1">เลขใบอนุญาตทำงาน <span class="text-red-500">*</span></label> <input type="text" id="f_wpNo" class="form-input w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" placeholder="13 หลัก" required maxlength="13" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
         <p class="text-[11px] text-gray-500 mt-1" id="wpCount">0/13 หลัก</p>
        </div>
@@ -244,7 +248,7 @@ select.form-input { background-image: url("data:image/svg+xml,%3Csvg xmlns='http
    </main>
   </div>
   <script>
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby5nnDFMlKzV0pMNV7DjkNmqOSsL6xfIbZCv-8LV0FQ5g7PamYDNvywuZANXle5mFCkMw/exec';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxpqVaUTuslIpu42T-wN6aOGk5iT0cDcBWoFiCeEWOgqwi7Hc0km1WoDsJCfhbKbxGSWA/exec';
 
 const offices = ["สำนักบริหารแรงงานต่างด้าว","สจก.พื้นที่ 1","สจก.พื้นที่ 2","สจก.พื้นที่ 3","สจก.พื้นที่ 4","สจก.พื้นที่ 5","สจก.พื้นที่ 6","สจก.พื้นที่ 7","สจก.พื้นที่ 8","สจก.พื้นที่ 9","สจก.พื้นที่ 10","สจจ.กระบี่","สจจ.กาญจนบุรี","สจจ.กาฬสินธุ์","สจจ.กำแพงเพชร","สจจ.ขอนแก่น","สจจ.จันทบุรี","สจจ.ฉะเชิงเทรา","สจจ.ชลบุรี","สจจ.ชัยนาท","สจจ.ชัยภูมิ","สจจ.ชุมพร","สจจ.เชียงราย","สจจ.เชียงใหม่","สจจ.ตรัง","สจจ.ตราด","สจจ.ตาก","สจจ.นครนายก","สจจ.นครปฐม","สจจ.นครพนม","สจจ.นครราชสีมา","สจจ.นครศรีธรรมราช","สจจ.นครสวรรค์","สจจ.นนทบุรี","สจจ.นราธิวาส","สจจ.น่าน","สจจ.บึงกาฬ","สจจ.บุรีรัมย์","สจจ.ปทุมธานี","สจจ.ประจวบคีรีขันธ์","สจจ.ปราจีนบุรี","สจจ.ปัตตานี","สจจ.พระนครศรีอยุธยา","สจจ.พะเยา","สจจ.พังงา","สจจ.พัทลุง","สจจ.พิจิตร","สจจ.พิษณุโลก","สจจ.เพชรบุรี","สจจ.เพชรบูรณ์","สจจ.แพร่","สจจ.ภูเก็ต","สจจ.มหาสารคาม","สจจ.มุกดาหาร","สจจ.แม่ฮ่องสอน","สจจ.ยโสธร","สจจ.ยะลา","สจจ.ร้อยเอ็ด","สจจ.ระนอง","สจจ.ระยอง","สจจ.ราชบุรี","สจจ.ลพบุรี","สจจ.ลำปาง","สจจ.ลำพูน","สจจ.เลย","สจจ.ศรีสะเกษ","สจจ.สกลนคร","สจจ.สงขลา","สจจ.สตูล","สจจ.สมุทรปราการ","สจจ.สมุทรสงคราม","สจจ.สมุทรสาคร","สจจ.สระแก้ว","สจจ.สระบุรี","สจจ.สิงห์บุรี","สจจ.สุโขทัย","สจจ.สุพรรณบุรี","สจจ.สุราษฎร์ธานี","สจจ.สุรินทร์","สจจ.หนองคาย","สจจ.หนองบัวลำภู","สจจ.อ่างทอง","สจจ.อุดรธานี","สจจ.อุตรดิตถ์","สจจ.อุทัยธานี","สจจ.อุบลราชธานี","สจจ.อำนาจเจริญ"];
 
@@ -265,6 +269,10 @@ function setupAutocomplete(inputId, dropdownId) {
 }
 
 // Digit counters
+document.getElementById('f_alienId').addEventListener('input', function() {
+  document.getElementById('alienIdCount').textContent = this.value.length + '/13 หลัก';
+  document.getElementById('alienIdCount').className = 'text-[11px] mt-1 ' + (this.value.length === 13 ? 'text-green-600 font-semibold' : 'text-gray-500');
+});
 document.getElementById('f_wpNo').addEventListener('input', function() {
   document.getElementById('wpCount').textContent = this.value.length + '/13 หลัก';
   document.getElementById('wpCount').className = 'text-[11px] mt-1 ' + (this.value.length === 13 ? 'text-green-600 font-semibold' : 'text-gray-500');
@@ -373,7 +381,7 @@ let isSubmitting = false;
 async function submitForm() {
   if (isSubmitting) return; // ป้องกันการส่งซ้ำ
   
-  const fields = ['f_recvNo','f_recvDate','f_workerName','f_wpNo','f_passport','f_nationality','f_empId','f_empName','f_office','f_staff','f_status'];
+  const fields = ['f_recvNo','f_recvDate','f_workerName','f_alienId','f_wpNo','f_passport','f_nationality','f_empId','f_empName','f_office','f_staff','f_status'];
   for (const fid of fields) {
     const el = document.getElementById(fid);
     if (!el.value.trim()) {
@@ -381,6 +389,10 @@ async function submitForm() {
       Swal.fire({ icon:'warning', title:'กรุณากรอกข้อมูล', text:'กรุณากรอกข้อมูลให้ครบถ้วน', confirmButtonColor:'#f43f5e' });
       return;
     }
+  }
+  if (document.getElementById('f_alienId').value.length !== 13) {
+    Swal.fire({ icon:'warning', title:'ข้อมูลไม่ถูกต้อง', text:'เลขประจำตัวแรงงานต่างด้าวหน้าต้องมี 13 หลัก', confirmButtonColor:'#f43f5e' });
+    return;
   }
   if (document.getElementById('f_wpNo').value.length !== 13) {
     Swal.fire({ icon:'warning', title:'ข้อมูลไม่ถูกต้อง', text:'เลขใบอนุญาตทำงานต้องมี 13 หลัก', confirmButtonColor:'#f43f5e' });
@@ -401,6 +413,7 @@ async function submitForm() {
     recvNo: document.getElementById('f_recvNo').value.trim(),
     recvDate: document.getElementById('f_recvDate').value,
     workerName: document.getElementById('f_workerName').value.trim(),
+    alienId: document.getElementById('f_alienId').value.trim(),
     wpNo: document.getElementById('f_wpNo').value.trim(),
     passport: document.getElementById('f_passport').value.trim(),
     nationality: document.getElementById('f_nationality').value,
@@ -419,7 +432,49 @@ async function submitForm() {
     const params = Object.entries(data).map(([k,v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`).join('&');
     const result = await jsonpRequest(SCRIPT_URL + '?' + params);
     if (result && result.status === 'success') {
-      Swal.fire({ icon:'success', title:'บันทึกสำเร็จ!', html:`<p class="text-sm">ลำดับที่: <strong>${result.seq || '-'}</strong></p>`, confirmButtonColor:'#6366f1' });
+      const detailsHtml = `
+        <div class="text-left space-y-3 mt-4">
+          <div class="bg-gradient-to-r from-green-50 to-emerald-50 p-4 rounded-lg border border-green-200">
+            <p class="text-xs font-semibold text-green-700 uppercase mb-1">ลำดับที่</p>
+            <p class="text-2xl font-bold text-green-900">${result.seq || '-'}</p>
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <div class="bg-blue-50 p-3 rounded-lg border border-blue-200">
+              <p class="text-xs font-semibold text-blue-700 uppercase mb-1">เลขรับ</p>
+              <p class="text-sm font-bold text-blue-900">${data.recvNo || '-'}</p>
+            </div>
+            <div class="bg-purple-50 p-3 rounded-lg border border-purple-200">
+              <p class="text-xs font-semibold text-purple-700 uppercase mb-1">วันที่รับ</p>
+              <p class="text-sm font-bold text-purple-900">${thaiDate(data.recvDate) || '-'}</p>
+            </div>
+            <div class="bg-orange-50 p-3 rounded-lg border border-orange-200 col-span-2">
+              <p class="text-xs font-semibold text-orange-700 uppercase mb-1">ชื่อแรงงาน</p>
+              <p class="text-sm font-bold text-orange-900">${data.workerName || '-'}</p>
+            </div>
+            <div class="bg-indigo-50 p-3 rounded-lg border border-indigo-200 col-span-2">
+              <p class="text-xs font-semibold text-indigo-700 uppercase mb-1">สำนักงาน</p>
+              <p class="text-sm font-bold text-indigo-900">${data.office || '-'}</p>
+            </div>
+            <div class="bg-cyan-50 p-3 rounded-lg border border-cyan-200 col-span-2">
+              <p class="text-xs font-semibold text-cyan-700 uppercase mb-1">เจ้าหน้าที่ผู้รับผิดชอบ</p>
+              <p class="text-sm font-bold text-cyan-900">${data.staff || '-'}</p>
+            </div>
+            <div class="bg-rose-50 p-3 rounded-lg border border-rose-200 col-span-2">
+              <p class="text-xs font-semibold text-rose-700 uppercase mb-1">สถานะ</p>
+              <p class="text-sm font-bold text-rose-900">${data.status || '-'}</p>
+            </div>
+          </div>
+        </div>
+      `;
+      Swal.fire({ 
+        icon:'success', 
+        title:'✓ บันทึกข้อมูลสำเร็จ!', 
+        html: detailsHtml,
+        confirmButtonColor:'#10b981',
+        confirmButtonText: 'ตกลง',
+        timer: 4000,
+        timerProgressBar: true
+      });
       resetForm();
     } else {
       Swal.fire({ icon:'error', title:'เกิดข้อผิดพลาด', text: result?.message || 'ไม่สามารถบันทึกข้อมูลได้', confirmButtonColor:'#6366f1' });
@@ -736,5 +791,5 @@ setupAutocomplete('f_office', 'officeDropdown');
 setupAutocomplete('searchOffice', 'searchOfficeDropdown');
 lucide.createIcons();
 </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9e981f8be3b08954',t:'MTc3NTcyMzE0OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9ec2b55275720886',t:'MTc3NjE2OTY4NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
