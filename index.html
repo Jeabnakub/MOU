@@ -195,8 +195,7 @@ select.form-input { background-image: url("data:image/svg+xml,%3Csvg xmlns='http
     <div class="p-5 border-b border-white/10">
      <div class="flex items-center gap-3 mb-3 justify-between">
       <div class="flex items-center gap-3">
-       <div class="w-10 h-10 rounded-lg bg-white flex items-center justify-center">
-        <i data-lucide="file-text" class="w-5 h-5 text-gray-600"></i>
+       <div class="w-10 h-10 rounded-lg bg-white flex items-center justify-center"><i data-lucide="file-text" class="w-5 h-5 text-gray-600"></i>
        </div>
        <div>
         <h1 class="text-sm font-bold leading-tight">ระบบทะเบียนคุม</h1>
@@ -204,15 +203,12 @@ select.form-input { background-image: url("data:image/svg+xml,%3Csvg xmlns='http
        </div>
       </div><button onclick="toggleMobileMenu()" class="menu-toggle text-white hover:bg-white/10 p-2 rounded md:hidden"> <i data-lucide="x" class="w-5 h-5"></i> </button>
      </div>
-     <div class="px-3 py-3 bg-white/5 rounded-lg">
-      <label class="text-xs font-semibold text-white/70 block mb-2">เลือกธีมสี</label>
-      <div class="grid grid-cols-5 gap-2">
-       <button onclick="switchTheme('default')" id="theme-default" title="เทอร์คอยส์" class="w-full h-8 rounded-lg bg-teal-500 hover:opacity-80 border-2 border-white/30 transition" style="background: linear-gradient(135deg, #0d9488 0%, #14b8a6 100%);"></button> <button onclick="switchTheme('ocean')" id="theme-ocean" title="มหาสมุทร" class="w-full h-8 rounded-lg hover:opacity-80 border-2 border-white/30 transition" style="background: linear-gradient(135deg, #1e40af 0%, #0369a1 100%);"></button> <button onclick="switchTheme('sunset')" id="theme-sunset" title="พระอาทิตย์ตก" class="w-full h-8 rounded-lg hover:opacity-80 border-2 border-white/30 transition" style="background: linear-gradient(135deg, #ea580c 0%, #f97316 100%);"></button> <button onclick="switchTheme('forest')" id="theme-forest" title="ป่าไม้" class="w-full h-8 rounded-lg hover:opacity-80 border-2 border-white/30 transition" style="background: linear-gradient(135deg, #15803d 0%, #22c55e 100%);"></button> <button onclick="switchTheme('apple')" id="theme-apple" title="Apple" class="w-full h-8 rounded-lg hover:opacity-80 border-2 border-white/30 transition" style="background: linear-gradient(135deg, #1d1d1f 0%, #0071e3 100%);"></button>
+     <div class="px-3 py-3 bg-white/5 rounded-lg"><label class="text-xs font-semibold text-white/70 block mb-2">เลือกธีมสี</label>
+      <div class="grid grid-cols-5 gap-2"><button onclick="switchTheme('default')" id="theme-default" title="เทอร์คอยส์" class="w-full h-8 rounded-lg bg-teal-500 hover:opacity-80 border-2 border-white/30 transition" style="background: linear-gradient(135deg, #0d9488 0%, #14b8a6 100%);"></button> <button onclick="switchTheme('ocean')" id="theme-ocean" title="มหาสมุทร" class="w-full h-8 rounded-lg hover:opacity-80 border-2 border-white/30 transition" style="background: linear-gradient(135deg, #1e40af 0%, #0369a1 100%);"></button> <button onclick="switchTheme('sunset')" id="theme-sunset" title="พระอาทิตย์ตก" class="w-full h-8 rounded-lg hover:opacity-80 border-2 border-white/30 transition" style="background: linear-gradient(135deg, #ea580c 0%, #f97316 100%);"></button> <button onclick="switchTheme('forest')" id="theme-forest" title="ป่าไม้" class="w-full h-8 rounded-lg hover:opacity-80 border-2 border-white/30 transition" style="background: linear-gradient(135deg, #15803d 0%, #22c55e 100%);"></button> <button onclick="switchTheme('apple')" id="theme-apple" title="Apple" class="w-full h-8 rounded-lg hover:opacity-80 border-2 border-white/30 transition" style="background: linear-gradient(135deg, #1d1d1f 0%, #0071e3 100%);"></button>
       </div>
      </div>
     </div>
-    <nav class="flex-1 py-4 space-y-1 px-2">
-     <a href="#" onclick="showPage('form')" id="nav-form" class="sidebar-link active flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium"> <i data-lucide="edit-3" class="w-4 h-4"></i> บันทึกข้อมูล </a> <a href="#" onclick="showPage('search')" id="nav-search" class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium"> <i data-lucide="search" class="w-4 h-4"></i> เรียกดูข้อมูล </a>
+    <nav class="flex-1 py-4 space-y-1 px-2"><a href="#" onclick="showPage('form')" id="nav-form" class="sidebar-link active flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium"> <i data-lucide="edit-3" class="w-4 h-4"></i> บันทึกข้อมูล </a> <a href="#" onclick="showPage('search')" id="nav-search" class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium"> <i data-lucide="search" class="w-4 h-4"></i> เรียกดูข้อมูล </a>
      <div class="pt-3 pb-1 px-4">
       <p class="text-[10px] uppercase tracking-wider text-white/40 font-semibold">รายงาน</p>
      </div><a href="#" onclick="showPage('report-all')" id="nav-report-all" class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium"> <i data-lucide="bar-chart-3" class="w-4 h-4"></i> ข้อมูลทั้งหมด </a> <a href="#" onclick="showPage('report-staff')" id="nav-report-staff" class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium"> <i data-lucide="users" class="w-4 h-4"></i> ตามเจ้าหน้าที่ </a> <a href="#" onclick="showPage('report-status')" id="nav-report-status" class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium"> <i data-lucide="activity" class="w-4 h-4"></i> ตามสถานะ </a> <a href="#" onclick="showPage('report-office')" id="nav-report-office" class="sidebar-link flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium"> <i data-lucide="building" class="w-4 h-4"></i> ตามสำนักงาน </a>
@@ -222,91 +218,71 @@ select.form-input { background-image: url("data:image/svg+xml,%3Csvg xmlns='http
        กรมการจัดหางาน</p>
     </div>
    </aside><!-- Main Content -->
-   <main class="flex-1 overflow-auto p-6">
-    <!-- Mobile Menu Button -->
-    <div class="md:hidden mb-4 flex items-center justify-between">
-     <button onclick="toggleMobileMenu()" class="menu-toggle bg-slate-600 text-white hover:bg-slate-700 px-4 py-2 rounded-lg text-sm transition flex items-center gap-2"> <i data-lucide="menu" class="w-4 h-4"></i> เมนู </button>
+   <main class="flex-1 overflow-auto p-6"><!-- Mobile Menu Button -->
+    <div class="md:hidden mb-4 flex items-center justify-between"><button onclick="toggleMobileMenu()" class="menu-toggle bg-slate-600 text-white hover:bg-slate-700 px-4 py-2 rounded-lg text-sm transition flex items-center gap-2"> <i data-lucide="menu" class="w-4 h-4"></i> เมนู </button>
     </div><!-- Page: Form -->
     <div id="page-form" class="fade-in max-w-5xl mx-auto">
      <div class="flex items-center gap-3 mb-6">
-      <div class="w-12 h-12 rounded-xl bg-teal-500 flex items-center justify-center">
-       <i data-lucide="file-plus" class="w-6 h-6 text-white"></i>
+      <div class="w-12 h-12 rounded-xl bg-teal-500 flex items-center justify-center"><i data-lucide="file-plus" class="w-6 h-6 text-white"></i>
       </div>
       <div>
        <h2 id="main-title" class="text-xl font-bold text-teal-600">ระบบทะเบียนคุมการบันทึกข้อมูลแจ้งการจ้าง (ตท.13)</h2>
        <p class="text-sm text-gray-500">สำนักบริหารแรงงานต่างด้าว กรมการจัดหางาน</p>
       </div>
      </div>
-     <form id="dataForm" class="card p-6 space-y-5" onsubmit="return false;">
-      <!-- Row 1 -->
+     <form id="dataForm" class="card p-6 space-y-5" onsubmit="return false;"><!-- Row 1 -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-       <div>
-        <label class="block text-sm font-semibold text-gray-700 mb-1">ลำดับที่</label> <input type="text" id="f_seq" class="form-input w-full border border-gray-300 rounded-lg px-3 py-2 text-sm bg-gray-100 cursor-not-allowed" readonly placeholder="ระบบจะกำหนดให้อัตโนมัติ">
+       <div><label class="block text-sm font-semibold text-gray-700 mb-1">ลำดับที่</label> <input type="text" id="f_seq" class="form-input w-full border border-gray-300 rounded-lg px-3 py-2 text-sm bg-gray-100 cursor-not-allowed" readonly placeholder="ระบบจะกำหนดให้อัตโนมัติ">
         <p class="text-[11px] text-amber-600 mt-1"><i data-lucide="info" class="w-3 h-3 inline"></i> ไม่ต้องกรอก ระบบจะบันทึกลำดับให้อัตโนมัติ</p>
        </div>
-       <div>
-        <label class="block text-sm font-semibold text-gray-700 mb-1">เลขรับ (สบต.) <span class="text-red-500">*</span></label> <input type="text" id="f_recvNo" class="form-input w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" placeholder="เลขรับ" required>
+       <div><label class="block text-sm font-semibold text-gray-700 mb-1">เลขรับ (สบต.) <span class="text-red-500">*</span></label> <input type="text" id="f_recvNo" class="form-input w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" placeholder="เลขรับ" required>
        </div>
-       <div>
-        <label class="block text-sm font-semibold text-gray-700 mb-1">วันที่รับหนังสือ (สบต.) <span class="text-red-500">*</span></label> <input type="date" id="f_recvDate" class="form-input w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" required onchange="document.getElementById('f_recvDateThai').textContent = convertDateToThai(this.value)">
+       <div><label class="block text-sm font-semibold text-gray-700 mb-1">วันที่รับหนังสือ (สบต.) <span class="text-red-500">*</span></label> <input type="date" id="f_recvDate" class="form-input w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" required onchange="document.getElementById('f_recvDateThai').textContent = convertDateToThai(this.value)">
         <p class="text-[11px] text-gray-500 mt-1" id="f_recvDateThai">-</p>
        </div>
       </div><!-- Row 2 -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-       <div>
-        <label class="block text-sm font-semibold text-gray-700 mb-1">ชื่อแรงงานต่างด้าว <span class="text-red-500">*</span></label> <input type="text" id="f_workerName" class="form-input w-full border border-gray-300 rounded-lg px-3 py-2 text-sm uppercase" placeholder="ENGLISH ONLY" required oninput="this.value=this.value.replace(/[^a-zA-Z\s.\-]/g,'').toUpperCase()">
+       <div><label class="block text-sm font-semibold text-gray-700 mb-1">ชื่อแรงงานต่างด้าว <span class="text-red-500">*</span></label> <input type="text" id="f_workerName" class="form-input w-full border border-gray-300 rounded-lg px-3 py-2 text-sm uppercase" placeholder="ENGLISH ONLY" required oninput="this.value=this.value.replace(/[^a-zA-Z\s.\-]/g,'').toUpperCase()">
         <p class="text-[11px] text-blue-600 mt-1"><i data-lucide="info" class="w-3 h-3 inline"></i> กรอกภาษาอังกฤษเท่านั้น (ปรับเป็นพิมพ์ใหญ่อัตโนมัติ)</p>
        </div>
-       <div>
-        <label class="block text-sm font-semibold text-gray-700 mb-1">เลขประจำตัวแรงงานต่างด้าว <span class="text-red-500">*</span></label> <input type="text" id="f_alienId" class="form-input w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" placeholder="เลขประจำตัว" required maxlength="13" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+       <div><label class="block text-sm font-semibold text-gray-700 mb-1">เลขประจำตัวแรงงานต่างด้าว <span class="text-red-500">*</span></label> <input type="text" id="f_alienId" class="form-input w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" placeholder="เลขประจำตัว" required maxlength="13" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
         <p class="text-[11px] text-gray-500 mt-1" id="alienIdCount">0/13 หลัก</p>
        </div>
-       <div>
-        <label class="block text-sm font-semibold text-gray-700 mb-1">เลขใบอนุญาตทำงาน <span class="text-red-500">*</span></label> <input type="text" id="f_wpNo" class="form-input w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" placeholder="13 หลัก" required maxlength="13" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+       <div><label class="block text-sm font-semibold text-gray-700 mb-1">เลขใบอนุญาตทำงาน <span class="text-red-500">*</span></label> <input type="text" id="f_wpNo" class="form-input w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" placeholder="13 หลัก" required maxlength="13" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
         <p class="text-[11px] text-gray-500 mt-1" id="wpCount">0/13 หลัก</p>
        </div>
-       <div>
-        <label class="block text-sm font-semibold text-gray-700 mb-1">หมายเลขหนังสือเดินทาง <span class="text-red-500">*</span></label> <input type="text" id="f_passport" class="form-input w-full border border-gray-300 rounded-lg px-3 py-2 text-sm uppercase" placeholder="ตัวอักษรอังกฤษและตัวเลข" required oninput="this.value=this.value.replace(/[^a-zA-Z0-9]/g,'').toUpperCase()">
+       <div><label class="block text-sm font-semibold text-gray-700 mb-1">หมายเลขหนังสือเดินทาง <span class="text-red-500">*</span></label> <input type="text" id="f_passport" class="form-input w-full border border-gray-300 rounded-lg px-3 py-2 text-sm uppercase" placeholder="ตัวอักษรอังกฤษและตัวเลข" required oninput="this.value=this.value.replace(/[^a-zA-Z0-9]/g,'').toUpperCase()">
         <p class="text-[11px] text-blue-600 mt-1"><i data-lucide="info" class="w-3 h-3 inline"></i> ภาษาอังกฤษและตัวเลขเท่านั้น</p>
        </div>
       </div><!-- Row 3 -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-       <div>
-        <label class="block text-sm font-semibold text-gray-700 mb-1">สัญชาติ <span class="text-red-500">*</span></label> <select id="f_nationality" class="form-input w-full border border-gray-300 rounded-lg px-3 py-2 text-sm appearance-none" required> <option value="">-- เลือกสัญชาติ --</option> <option>เมียนมา</option><option>ลาว</option><option>กัมพูชา</option><option>เวียดนาม</option><option>อื่น ๆ</option> </select>
+       <div><label class="block text-sm font-semibold text-gray-700 mb-1">สัญชาติ <span class="text-red-500">*</span></label> <select id="f_nationality" class="form-input w-full border border-gray-300 rounded-lg px-3 py-2 text-sm appearance-none" required> <option value="">-- เลือกสัญชาติ --</option> <option>เมียนมา</option><option>ลาว</option><option>กัมพูชา</option><option>เวียดนาม</option><option>อื่น ๆ</option> </select>
        </div>
-       <div>
-        <label class="block text-sm font-semibold text-gray-700 mb-1">เลขประจำตัวนายจ้าง <span class="text-red-500">*</span></label> <input type="text" id="f_empId" class="form-input w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" placeholder="13 หลัก" required maxlength="13" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+       <div><label class="block text-sm font-semibold text-gray-700 mb-1">เลขประจำตัวนายจ้าง <span class="text-red-500">*</span></label> <input type="text" id="f_empId" class="form-input w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" placeholder="13 หลัก" required maxlength="13" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
         <p class="text-[11px] text-gray-500 mt-1" id="empIdCount">0/13 หลัก</p>
        </div>
-       <div>
-        <label class="block text-sm font-semibold text-gray-700 mb-1">ชื่อนายจ้าง/สถานประกอบการ <span class="text-red-500">*</span></label> <input type="text" id="f_empName" class="form-input w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" placeholder="ชื่อนายจ้าง" required>
+       <div><label class="block text-sm font-semibold text-gray-700 mb-1">ชื่อนายจ้าง/สถานประกอบการ <span class="text-red-500">*</span></label> <input type="text" id="f_empName" class="form-input w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" placeholder="ชื่อนายจ้าง" required>
        </div>
       </div><!-- Row 4 -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-       <div class="relative">
-        <label class="block text-sm font-semibold text-gray-700 mb-1">ยื่นเอกสารผ่านสำนักงาน <span class="text-red-500">*</span></label> <input type="text" id="f_office" class="form-input w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" placeholder="พิมพ์เพื่อค้นหาสำนักงาน..." required autocomplete="off">
+       <div class="relative"><label class="block text-sm font-semibold text-gray-700 mb-1">ยื่นเอกสารผ่านสำนักงาน <span class="text-red-500">*</span></label> <input type="text" id="f_office" class="form-input w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" placeholder="พิมพ์เพื่อค้นหาสำนักงาน..." required autocomplete="off">
         <div id="officeDropdown" class="autocomplete-list hidden w-full"></div>
        </div>
-       <div>
-        <label class="block text-sm font-semibold text-gray-700 mb-1">เจ้าหน้าที่ผู้รับผิดชอบ <span class="text-red-500">*</span></label> <select id="f_staff" class="form-input w-full border border-gray-300 rounded-lg px-3 py-2 text-sm appearance-none" required> <option value="">-- เลือกเจ้าหน้าที่ --</option> <optgroup label="👨 ชาย"> <option>นายณภัทร ทิพยโอสถ</option> <option>นายสุทธาธิโรจน์ ยางงาม</option> <option>นายสุเมธ ยิ้มพงษ์</option> </optgroup> <optgroup label="👩 หญิง"> <option>นางสาวฐิติวรดา อินทร์ประสิทธิ์</option> <option>นางสาวนุศรา กลิ่นจุน</option> <option>นางสาวพรพัสตร์ ช่วยบำรุง</option> <option>นางสาวพัชราภา สุทธิอาจ</option> <option>นางสาวมณฑกานต์ แจ่มใจ</option> <option>นางสาวเมขลา อุดมสิริสถาพร</option> <option>นางสาวศิริปรมินทร์ ขันติคเชนชาติ</option> </optgroup> </select>
+       <div><label class="block text-sm font-semibold text-gray-700 mb-1">เจ้าหน้าที่ผู้รับผิดชอบ <span class="text-red-500">*</span></label> <select id="f_staff" class="form-input w-full border border-gray-300 rounded-lg px-3 py-2 text-sm appearance-none" required> <option value="">-- เลือกเจ้าหน้าที่ --</option> <optgroup label="👨 ชาย"> <option>นายณภัทร ทิพยโอสถ</option> <option>นายสุทธาธิโรจน์ ยางงาม</option> <option>นายสุเมธ ยิ้มพงษ์</option> </optgroup> <optgroup label="👩 หญิง"> <option>นางสาวฐิติวรดา อินทร์ประสิทธิ์</option> <option>นางสาวนุศรา กลิ่นจุน</option> <option>นางสาวพรพัสตร์ ช่วยบำรุง</option> <option>นางสาวพัชราภา สุทธิอาจ</option> <option>นางสาวมณฑกานต์ แจ่มใจ</option> <option>นางสาวเมขลา อุดมสิริสถาพร</option> <option>นางสาวศิริปรมินทร์ ขันติคเชนชาติ</option> </optgroup> </select>
        </div>
-       <div>
-        <label class="block text-sm font-semibold text-gray-700 mb-1">สถานะการดำเนินการ <span class="text-red-500">*</span></label> <select id="f_status" class="form-input w-full border border-gray-300 rounded-lg px-3 py-2 text-sm appearance-none" required> <option value="">-- เลือกสถานะ --</option> <option>ดำเนินการบันทึกข้อมูลเรียบร้อยรอแจ้งหน่วยงาน</option> <option>ดำเนินการเสร็จสิ้น</option> </select>
+       <div><label class="block text-sm font-semibold text-gray-700 mb-1">สถานะการดำเนินการ <span class="text-red-500">*</span></label> <select id="f_status" class="form-input w-full border border-gray-300 rounded-lg px-3 py-2 text-sm appearance-none" required> <option value="">-- เลือกสถานะ --</option> <option>ดำเนินการบันทึกข้อมูลเรียบร้อยรอแจ้งหน่วยงาน</option> <option>ดำเนินการเสร็จสิ้น</option> </select>
        </div>
       </div><!-- Row 5 -->
-      <div>
-       <label class="block text-sm font-semibold text-gray-700 mb-1">หมายเหตุ</label> <textarea id="f_remark" class="form-input w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" rows="2" placeholder="หมายเหตุ (ถ้ามี)"></textarea>
+      <div><label class="block text-sm font-semibold text-gray-700 mb-1">หมายเหตุ</label> <textarea id="f_remark" class="form-input w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" rows="2" placeholder="หมายเหตุ (ถ้ามี)"></textarea>
       </div>
-      <div class="flex gap-3 pt-2">
-       <button type="button" onclick="submitForm()" class="bg-teal-600 hover:bg-teal-700 text-white font-semibold px-8 py-2.5 rounded-lg text-sm transition flex items-center gap-2"> <i data-lucide="save" class="w-4 h-4"></i> บันทึกข้อมูล </button> <button type="button" onclick="clearAllFormData()" class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold px-6 py-2.5 rounded-lg text-sm transition flex items-center gap-2"> <i data-lucide="rotate-ccw" class="w-4 h-4"></i> ล้างข้อมูล </button>
+      <div class="flex gap-3 pt-2"><button type="button" onclick="submitForm()" class="bg-teal-600 hover:bg-teal-700 text-white font-semibold px-8 py-2.5 rounded-lg text-sm transition flex items-center gap-2"> <i data-lucide="save" class="w-4 h-4"></i> บันทึกข้อมูล </button> <button type="button" onclick="clearAllFormData()" class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold px-6 py-2.5 rounded-lg text-sm transition flex items-center gap-2"> <i data-lucide="rotate-ccw" class="w-4 h-4"></i> ล้างข้อมูล </button>
       </div>
      </form>
     </div><!-- Page: Search -->
     <div id="page-search" class="fade-in max-w-6xl mx-auto hidden">
      <div class="p-6 border-b border-white/10">
       <div class="flex items-center gap-3 mb-2">
-       <div class="w-12 h-12 rounded-xl bg-teal-500 flex items-center justify-center">
-        <i data-lucide="search" class="w-6 h-6 text-white"></i>
+       <div class="w-12 h-12 rounded-xl bg-teal-500 flex items-center justify-center"><i data-lucide="search" class="w-6 h-6 text-white"></i>
        </div>
        <div>
         <h2 class="text-xl font-bold text-teal-600">เรียกดูข้อมูลจากฐานข้อมูล</h2>
@@ -316,8 +292,7 @@ select.form-input { background-image: url("data:image/svg+xml,%3Csvg xmlns='http
      </div>
      <div class="card p-6 mb-4">
       <div class="flex flex-col md:flex-row gap-3">
-       <div class="relative flex-1">
-        <input type="text" id="searchOffice" class="form-input w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" placeholder="พิมพ์ชื่อสำนักงาน..." autocomplete="off">
+       <div class="relative flex-1"><input type="text" id="searchOffice" class="form-input w-full border border-gray-300 rounded-lg px-3 py-2 text-sm" placeholder="พิมพ์ชื่อสำนักงาน..." autocomplete="off">
         <div id="searchOfficeDropdown" class="autocomplete-list hidden w-full"></div>
        </div><button type="button" onclick="fetchData()" class="bg-rose-600 hover:bg-rose-700 text-white font-semibold px-6 py-2.5 rounded-lg text-sm transition flex items-center gap-2"> <i data-lucide="database" class="w-4 h-4"></i> เรียกดูข้อมูล </button><button type="button" onclick="clearAllData()" class="bg-gray-500 hover:bg-gray-600 text-white font-semibold px-6 py-2.5 rounded-lg text-sm transition flex items-center gap-2"> <i data-lucide="trash-2" class="w-4 h-4"></i> ล้างข้อมูล </button>
       </div>
@@ -328,52 +303,44 @@ select.form-input { background-image: url("data:image/svg+xml,%3Csvg xmlns='http
     </div><!-- Page: Report All -->
     <div id="page-report-all" class="fade-in max-w-5xl mx-auto hidden">
      <div class="flex items-center gap-3 mb-6">
-      <div class="w-12 h-12 rounded-xl bg-teal-600 flex items-center justify-center">
-       <i data-lucide="bar-chart-3" class="w-6 h-6 text-white"></i>
+      <div class="w-12 h-12 rounded-xl bg-teal-600 flex items-center justify-center"><i data-lucide="bar-chart-3" class="w-6 h-6 text-white"></i>
       </div>
       <h2 class="text-xl font-bold text-teal-600">รายงานข้อมูลทั้งหมด</h2>
      </div>
-     <div id="reportAllContent" class="card p-6">
-      <button onclick="loadReportAll()" class="bg-teal-600 hover:bg-teal-700 text-white font-semibold px-6 py-2.5 rounded-lg text-sm transition flex items-center gap-2 mx-auto"> <i data-lucide="refresh-cw" class="w-4 h-4"></i> โหลดรายงาน </button>
+     <div id="reportAllContent" class="card p-6"><button onclick="loadReportAll()" class="bg-teal-600 hover:bg-teal-700 text-white font-semibold px-6 py-2.5 rounded-lg text-sm transition flex items-center gap-2 mx-auto"> <i data-lucide="refresh-cw" class="w-4 h-4"></i> โหลดรายงาน </button>
      </div>
     </div><!-- Page: Report Staff -->
     <div id="page-report-staff" class="fade-in max-w-5xl mx-auto hidden">
      <div class="flex items-center gap-3 mb-6">
-      <div class="w-12 h-12 rounded-xl bg-fuchsia-600 flex items-center justify-center">
-       <i data-lucide="users" class="w-6 h-6 text-white"></i>
+      <div class="w-12 h-12 rounded-xl bg-fuchsia-600 flex items-center justify-center"><i data-lucide="users" class="w-6 h-6 text-white"></i>
       </div>
       <h2 class="text-xl font-bold text-teal-600">รายงานตามเจ้าหน้าที่</h2>
      </div>
-     <div id="reportStaffContent" class="card p-6">
-      <button onclick="loadReportStaff()" class="bg-fuchsia-600 hover:bg-fuchsia-700 text-white font-semibold px-6 py-2.5 rounded-lg text-sm transition flex items-center gap-2 mx-auto"> <i data-lucide="refresh-cw" class="w-4 h-4"></i> โหลดรายงาน </button>
+     <div id="reportStaffContent" class="card p-6"><button onclick="loadReportStaff()" class="bg-fuchsia-600 hover:bg-fuchsia-700 text-white font-semibold px-6 py-2.5 rounded-lg text-sm transition flex items-center gap-2 mx-auto"> <i data-lucide="refresh-cw" class="w-4 h-4"></i> โหลดรายงาน </button>
      </div>
     </div><!-- Page: Report Status -->
     <div id="page-report-status" class="fade-in max-w-5xl mx-auto hidden">
      <div class="flex items-center gap-3 mb-6">
-      <div class="w-12 h-12 rounded-xl bg-orange-600 flex items-center justify-center">
-       <i data-lucide="activity" class="w-6 h-6 text-white"></i>
+      <div class="w-12 h-12 rounded-xl bg-orange-600 flex items-center justify-center"><i data-lucide="activity" class="w-6 h-6 text-white"></i>
       </div>
       <h2 class="text-xl font-bold text-teal-600">รายงานตามสถานะ</h2>
      </div>
-     <div id="reportStatusContent" class="card p-6">
-      <button onclick="loadReportStatus()" class="bg-orange-600 hover:bg-orange-700 text-white font-semibold px-6 py-2.5 rounded-lg text-sm transition flex items-center gap-2 mx-auto"> <i data-lucide="refresh-cw" class="w-4 h-4"></i> โหลดรายงาน </button>
+     <div id="reportStatusContent" class="card p-6"><button onclick="loadReportStatus()" class="bg-orange-600 hover:bg-orange-700 text-white font-semibold px-6 py-2.5 rounded-lg text-sm transition flex items-center gap-2 mx-auto"> <i data-lucide="refresh-cw" class="w-4 h-4"></i> โหลดรายงาน </button>
      </div>
     </div><!-- Page: Report Office -->
     <div id="page-report-office" class="fade-in max-w-5xl mx-auto hidden">
      <div class="flex items-center gap-3 mb-6">
-      <div class="w-12 h-12 rounded-xl bg-red-600 flex items-center justify-center">
-       <i data-lucide="building" class="w-6 h-6 text-white"></i>
+      <div class="w-12 h-12 rounded-xl bg-red-600 flex items-center justify-center"><i data-lucide="building" class="w-6 h-6 text-white"></i>
       </div>
       <h2 class="text-xl font-bold text-teal-600">รายงานตามสำนักงาน</h2>
      </div>
-     <div id="reportOfficeContent" class="card p-6">
-      <button onclick="loadReportOffice()" class="bg-red-600 hover:bg-red-700 text-white font-semibold px-6 py-2.5 rounded-lg text-sm transition flex items-center gap-2 mx-auto"> <i data-lucide="refresh-cw" class="w-4 h-4"></i> โหลดรายงาน </button>
+     <div id="reportOfficeContent" class="card p-6"><button onclick="loadReportOffice()" class="bg-red-600 hover:bg-red-700 text-white font-semibold px-6 py-2.5 rounded-lg text-sm transition flex items-center gap-2 mx-auto"> <i data-lucide="refresh-cw" class="w-4 h-4"></i> โหลดรายงาน </button>
      </div>
     </div>
    </main>
   </div>
   <script>
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxpqVaUTuslIpu42T-wN6aOGk5iT0cDcBWoFiCeEWOgqwi7Hc0km1WoDsJCfhbKbxGSWA/exec';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby1boHqFC526eG6EsrpvrtffXaKlDtOXIBPUPSQS9KXBf5Yzy0ThysyQViU_2pgvKRsUQ/exec';
 
 const offices = ["สำนักบริหารแรงงานต่างด้าว","สจก.พื้นที่ 1","สจก.พื้นที่ 2","สจก.พื้นที่ 3","สจก.พื้นที่ 4","สจก.พื้นที่ 5","สจก.พื้นที่ 6","สจก.พื้นที่ 7","สจก.พื้นที่ 8","สจก.พื้นที่ 9","สจก.พื้นที่ 10","สจจ.กระบี่","สจจ.กาญจนบุรี","สจจ.กาฬสินธุ์","สจจ.กำแพงเพชร","สจจ.ขอนแก่น","สจจ.จันทบุรี","สจจ.ฉะเชิงเทรา","สจจ.ชลบุรี","สจจ.ชัยนาท","สจจ.ชัยภูมิ","สจจ.ชุมพร","สจจ.เชียงราย","สจจ.เชียงใหม่","สจจ.ตรัง","สจจ.ตราด","สจจ.ตาก","สจจ.นครนายก","สจจ.นครปฐม","สจจ.นครพนม","สจจ.นครราชสีมา","สจจ.นครศรีธรรมราช","สจจ.นครสวรรค์","สจจ.นนทบุรี","สจจ.นราธิวาส","สจจ.น่าน","สจจ.บึงกาฬ","สจจ.บุรีรัมย์","สจจ.ปทุมธานี","สจจ.ประจวบคีรีขันธ์","สจจ.ปราจีนบุรี","สจจ.ปัตตานี","สจจ.พระนครศรีอยุธยา","สจจ.พะเยา","สจจ.พังงา","สจจ.พัทลุง","สจจ.พิจิตร","สจจ.พิษณุโลก","สจจ.เพชรบุรี","สจจ.เพชรบูรณ์","สจจ.แพร่","สจจ.ภูเก็ต","สจจ.มหาสารคาม","สจจ.มุกดาหาร","สจจ.แม่ฮ่องสอน","สจจ.ยโสธร","สจจ.ยะลา","สจจ.ร้อยเอ็ด","สจจ.ระนอง","สจจ.ระยอง","สจจ.ราชบุรี","สจจ.ลพบุรี","สจจ.ลำปาง","สจจ.ลำพูน","สจจ.เลย","สจจ.ศรีสะเกษ","สจจ.สกลนคร","สจจ.สงขลา","สจจ.สตูล","สจจ.สมุทรปราการ","สจจ.สมุทรสงคราม","สจจ.สมุทรสาคร","สจจ.สระแก้ว","สจจ.สระบุรี","สจจ.สิงห์บุรี","สจจ.สุโขทัย","สจจ.สุพรรณบุรี","สจจ.สุราษฎร์ธานี","สจจ.สุรินทร์","สจจ.หนองคาย","สจจ.หนองบัวลำภู","สจจ.อ่างทอง","สจจ.อุดรธานี","สจจ.อุตรดิตถ์","สจจ.อุทัยธานี","สจจ.อุบลราชธานี","สจจ.อำนาจเจริญ"];
 
@@ -916,5 +883,5 @@ setupAutocomplete('f_office', 'officeDropdown');
 setupAutocomplete('searchOffice', 'searchOfficeDropdown');
 lucide.createIcons();
 </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9eca4eb990de4b58',t:'MTc3NjI0OTM2OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9ed7301193d68963',t:'MTc3NjM4NDQyOC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
